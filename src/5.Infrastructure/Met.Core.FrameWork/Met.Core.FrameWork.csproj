@@ -1,0 +1,88 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="Met.Core.FrameWork.Models\Met.Core.FrameWork.Models.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Met.Core.FrameWork.Models.tt</DependentUpon>
+    </None>
+    <None Include="Met.Core.FrameWork.Repository.SqlServer\Met.Core.FrameWork.Repository.SqlServer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Met.Core.FrameWork.Repository.SqlServer.tt</DependentUpon>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="DbHelper.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>DbHelper.cs</LastGenOutput>
+    </None>
+    <None Update="Met.Core.FrameWork.IRepository\Met.Core.FrameWork.IRepository.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Met.Core.FrameWork.IRepository.cs</LastGenOutput>
+    </None>
+    <None Update="Met.Core.FrameWork.IServices\Met.Core.FrameWork.IServices.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Met.Core.FrameWork.IServices.cs</LastGenOutput>
+    </None>
+    <None Update="Met.Core.FrameWork.Models\Met.Core.FrameWork.Models.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Met.Core.FrameWork.Models.cs</LastGenOutput>
+    </None>
+    <None Update="Met.Core.FrameWork.Repository.SqlServer\Met.Core.FrameWork.Repository.SqlServer.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Met.Core.FrameWork.Repository.SqlServer.cs</LastGenOutput>
+    </None>
+    <None Update="Met.Core.FrameWork.Services\Met.Core.FrameWork.Services.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Met.Core.FrameWork.Services.cs</LastGenOutput>
+    </None>
+    <None Update="ModelAuto.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ModelAuto.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Met.Core.FrameWork.IRepository\Met.Core.FrameWork.IRepository.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Met.Core.FrameWork.IRepository.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Met.Core.FrameWork.IServices\Met.Core.FrameWork.IServices.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Met.Core.FrameWork.IServices.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Met.Core.FrameWork.Models\Met.Core.FrameWork.Models.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Met.Core.FrameWork.Models.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Met.Core.FrameWork.Repository.SqlServer\Met.Core.FrameWork.Repository.SqlServer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Met.Core.FrameWork.Repository.SqlServer.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Met.Core.FrameWork.Services\Met.Core.FrameWork.Services.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Met.Core.FrameWork.Services.tt</DependentUpon>
+    </Compile>
+    <Compile Update="ModelAuto.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ModelAuto.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+</Project>
