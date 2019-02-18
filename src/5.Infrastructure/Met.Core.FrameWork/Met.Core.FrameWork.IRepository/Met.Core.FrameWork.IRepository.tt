@@ -18,7 +18,7 @@
 
 <# 
 	var solutionsPath = Host.ResolveAssemblyReference("$(SolutionDir)");
-	var OutputPath = solutionsPath + "\\src\\3.Repository\\Met.Core.IRepository";
+	var OutputPath = solutionsPath + "\\src\\3.Repository\\Met.Core.IRepository\\Base";
 	if (!Directory.Exists(OutputPath))
 	{
 	    Directory.CreateDirectory(OutputPath);
@@ -46,7 +46,7 @@ namespace Met.Core.IRepository
 	/// <summary>
 	/// I<#=tableName#>Repository
 	/// </summary>	
-	public interface I<#=tableName#>Repository : IBaseRepository<<#=tableName#>>
+	public partial interface I<#=tableName#>Repository : IBaseRepository<<#=tableName#>>
     {
 
        
@@ -82,7 +82,7 @@ namespace Met.Core.IRepository
 	/// <summary>
 	/// I<#=row["TABLE_NAME"].ToString()#>Repository
 	/// </summary>	
-	public interface I<#=row["TABLE_NAME"].ToString()#>Repository : IBaseRepository<<#=row["TABLE_NAME"].ToString()#>>
+	public partial interface I<#=row["TABLE_NAME"].ToString()#>Repository : IBaseRepository<<#=row["TABLE_NAME"].ToString()#>>
     {
 
        

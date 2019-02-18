@@ -1,5 +1,6 @@
 ﻿using Met.Core.IRepository;
 using Met.Core.IServices;
+using Met.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -41,13 +42,43 @@ namespace Met.Core.Services
         }
 
         /// <summary>
+        /// 根据条件查询数据
+        /// </summary>
+        /// <param name="predicate">条件表达式树</param>
+        /// <returns></returns>
+        public async Task<TEntity> QueryByClause(Expression<Func<TEntity, bool>> predicate)
+        {
+            return await baseDal.QueryByClause(predicate);
+        }
+
+        /// <summary>
+        /// 根据条件查询数据
+        /// </summary>
+        /// <param name="predicate">条件</param>
+        /// <returns></returns>
+        public async Task<TEntity> QueryByClause(string strWhere)
+        {
+            return await baseDal.QueryByClause(strWhere);
+        }
+
+        /// <summary>
         /// 写入实体数据
         /// </summary>
         /// <param name="entity">博文实体类</param>
         /// <returns></returns>
-        public async Task<int> Add(TEntity entity)
+        public async Task<bool> Add(TEntity entity)
         {
-            return await baseDal.Add(entity);
+            return await baseDal.Add(entity) > 0 ? true : false;
+        }
+
+        /// <summary>
+        /// 批量写入实体数据
+        /// </summary>
+        /// <param name="entity">列表</param>
+        /// <returns></returns>
+        public async Task<bool> Add(List<TEntity> list)
+        {
+            return await baseDal.Add(list);
         }
 
         /// <summary>
@@ -105,7 +136,25 @@ namespace Met.Core.Services
             return await baseDal.DeleteByIds(ids);
         }
 
+        /// <summary>
+        /// 删除指定条件表达式的数据
+        /// </summary>
+        /// <param name="whereExpression"></param>
+        /// <returns></returns>
+        public async Task<bool> Delete(Expression<Func<TEntity, bool>> whereExpression)
+        {
+            return await baseDal.Delete(whereExpression);
+        }
 
+        /// <summary>
+        /// 删除指定条件的数据
+        /// </summary>
+        /// <param name="strWhere"></param>
+        /// <returns></returns>
+        public async Task<bool> Delete(string strWhere)
+        {
+            return await baseDal.Delete(strWhere);
+        }
 
         /// <summary>
         /// 功能描述:查询所有数据
@@ -242,12 +291,30 @@ namespace Met.Core.Services
             strOrderByFileds);
         }
 
-        public async Task<List<TEntity>> QueryPage(Expression<Func<TEntity, bool>> whereExpression,
-        int intPageIndex = 0, int intPageSize = 20, string strOrderByFileds = null)
+        /// <summary>
+        /// 根据条件查询分页数据
+        /// </summary>
+        /// <param name="whereExpression"></param>
+        /// <param name="orderBy"></param>
+        /// <param name="pageIndex">当前页面索引</param>
+        /// <param name="pageSize">分布大小</param>
+        /// <returns></returns>
+        public async Task<PageData<TEntity>> QueryPage(Expression<Func<TEntity, bool>> whereExpression, int pageIndex = 1, int pageSize = 20, string orderBy = "")
         {
-            return await baseDal.QueryPage(whereExpression,
-         intPageIndex = 0, intPageSize, strOrderByFileds);
+            return await baseDal.QueryPage(whereExpression, pageIndex, pageSize, orderBy);
         }
 
+        /// <summary>
+        /// 根据条件查询分页数据
+        /// </summary>
+        /// <param name="strWhere"></param>
+        /// <param name="orderBy"></param>
+        /// <param name="pageIndex">当前页面索引</param>
+        /// <param name="pageSize">分布大小</param>
+        /// <returns></returns>
+        public async Task<PageData<TEntity>> QueryPage(string strWhere = "", int pageIndex = 1, int pageSize = 20, string orderBy = "")
+        {
+            return await baseDal.QueryPage(strWhere, pageIndex, pageSize, orderBy);
+        }
     }
 }

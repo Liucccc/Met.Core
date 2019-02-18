@@ -4,14 +4,22 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>..\..\1.UI\Met.Core.Admin\bin\Debug\</OutputPath>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="sqlSugarCore" Version="4.9.7.5" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\4.Entity\Met.Core.Models\Met.Core.Models.csproj" />
-    <ProjectReference Include="..\..\5.Infrastructure\Met.Core.Common\Met.Core.Common.csproj" />
+    <ProjectReference Include="..\..\5.Infrastructure\Met.Core.Util\Met.Core.Util.csproj" />
     <ProjectReference Include="..\Met.Core.IRepository\Met.Core.IRepository.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Extend\" />
   </ItemGroup>
 
 </Project>

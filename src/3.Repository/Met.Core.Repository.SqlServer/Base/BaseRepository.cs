@@ -1,4 +1,5 @@
 ﻿using Met.Core.IRepository;
+using Met.Core.Models;
 using SqlSugar;
 using System;
 using System.Collections.Generic;
@@ -45,7 +46,7 @@ namespace Met.Core.Repository.SqlServer
         }
         /// <summary>
         /// 功能描述:根据ID查询一条数据
-        /// 作　　者:Blog.Core
+        /// 作　　者:Met.Core
         /// </summary>
         /// <param name="objId">id（必须指定主键特性 [SugarColumn(IsPrimaryKey=true)]），如果是联合主键，请使用Where条件</param>
         /// <param name="blnUseCache">是否使用缓存</param>
@@ -56,8 +57,28 @@ namespace Met.Core.Repository.SqlServer
         }
 
         /// <summary>
+        /// 根据条件查询数据
+        /// </summary>
+        /// <param name="predicate">条件表达式树</param>
+        /// <returns></returns>
+        public async Task<TEntity> QueryByClause(Expression<Func<TEntity, bool>> predicate)
+        {
+            return await Task.Run(() => db.Queryable<TEntity>().First(predicate));
+        }
+
+        /// <summary>
+        /// 根据条件查询数据
+        /// </summary>
+        /// <param name="strWhere">条件</param>
+        /// <returns></returns>
+        public async Task<TEntity> QueryByClause(string strWhere)
+        {
+            return await Task.Run(() => db.Queryable<TEntity>().Where(strWhere).First());
+        }
+
+        /// <summary>
         /// 功能描述:根据ID查询数据
-        /// 作　　者:Blog.Core
+        /// 作　　者:Met.Core
         /// </summary>
         /// <param name="lstIds">id列表（必须指定主键特性 [SugarColumn(IsPrimaryKey=true)]），如果是联合主键，请使用Where条件</param>
         /// <returns>数据实体列表</returns>
@@ -69,7 +90,7 @@ namespace Met.Core.Repository.SqlServer
         /// <summary>
         /// 写入实体数据
         /// </summary>
-        /// <param name="entity">博文实体类</param>
+        /// <param name="entity">实体类</param>
         /// <returns></returns>
         public async Task<int> Add(TEntity entity)
         {
@@ -79,9 +100,21 @@ namespace Met.Core.Repository.SqlServer
         }
 
         /// <summary>
+        /// 批量写入实体数据
+        /// </summary>
+        /// <param name="entity">列表</param>
+        /// <returns></returns>
+        public async Task<bool> Add(List<TEntity> list)
+        {
+            var i = await Task.Run(() => db.Insertable(list.ToArray()).ExecuteCommand());
+            //返回的i是long类型,这里你可以根据你的业务需要进行处理
+            return i > 0;
+        }
+
+        /// <summary>
         /// 更新实体数据
         /// </summary>
-        /// <param name="entity">博文实体类</param>
+        /// <param name="entity">实体类</param>
         /// <returns></returns>
         public async Task<bool> Update(TEntity entity)
         {
@@ -126,7 +159,7 @@ namespace Met.Core.Repository.SqlServer
         /// <summary>
         /// 根据实体删除一条数据
         /// </summary>
-        /// <param name="entity">博文实体类</param>
+        /// <param name="entity">实体类</param>
         /// <returns></returns>
         public async Task<bool> Delete(TEntity entity)
         {
@@ -156,11 +189,31 @@ namespace Met.Core.Repository.SqlServer
             return i > 0;
         }
 
+        /// <summary>
+        /// 删除指定条件表达式的数据
+        /// </summary>
+        /// <param name="whereExpression"></param>
+        /// <returns></returns>
+        public async Task<bool> Delete(Expression<Func<TEntity, bool>> whereExpression)
+        {
+            var i = await Task.Run(() => db.Deleteable<TEntity>().Where(whereExpression).ExecuteCommand());
+            return i > 0;
+        }
 
+        /// <summary>
+        /// 删除指定条件的数据
+        /// </summary>
+        /// <param name="strWhere"></param>
+        /// <returns></returns>
+        public async Task<bool> Delete(string strWhere)
+        {
+            var i = await Task.Run(() => db.Deleteable<TEntity>().Where(strWhere).ExecuteCommand());
+            return i > 0;
+        }
 
         /// <summary>
         /// 功能描述:查询所有数据
-        /// 作　　者:Blog.Core
+        /// 作　　者:Met.Core
         /// </summary>
         /// <returns>数据列表</returns>
         public async Task<List<TEntity>> Query()
@@ -170,7 +223,7 @@ namespace Met.Core.Repository.SqlServer
 
         /// <summary>
         /// 功能描述:查询数据列表
-        /// 作　　者:Blog.Core
+        /// 作　　者:Met.Core
         /// </summary>
         /// <param name="strWhere">条件</param>
         /// <returns>数据列表</returns>
@@ -181,7 +234,7 @@ namespace Met.Core.Repository.SqlServer
 
         /// <summary>
         /// 功能描述:查询数据列表
-        /// 作　　者:Blog.Core
+        /// 作　　者:Met.Core
         /// </summary>
         /// <param name="whereExpression">whereExpression</param>
         /// <returns>数据列表</returns>
@@ -192,7 +245,7 @@ namespace Met.Core.Repository.SqlServer
 
         /// <summary>
         /// 功能描述:查询一个列表
-        /// 作　　者:Blog.Core
+        /// 作　　者:Met.Core
         /// </summary>
         /// <param name="whereExpression">条件表达式</param>
         /// <param name="strOrderByFileds">排序字段，如name asc,age desc</param>
@@ -215,7 +268,7 @@ namespace Met.Core.Repository.SqlServer
 
         /// <summary>
         /// 功能描述:查询一个列表
-        /// 作　　者:Blog.Core
+        /// 作　　者:Met.Core
         /// </summary>
         /// <param name="strWhere">条件</param>
         /// <param name="strOrderByFileds">排序字段，如name asc,age desc</param>
@@ -228,7 +281,7 @@ namespace Met.Core.Repository.SqlServer
 
         /// <summary>
         /// 功能描述:查询前N条数据
-        /// 作　　者:Blog.Core
+        /// 作　　者:Met.Core
         /// </summary>
         /// <param name="whereExpression">条件表达式</param>
         /// <param name="intTop">前N条</param>
@@ -244,7 +297,7 @@ namespace Met.Core.Repository.SqlServer
 
         /// <summary>
         /// 功能描述:查询前N条数据
-        /// 作　　者:Blog.Core
+        /// 作　　者:Met.Core
         /// </summary>
         /// <param name="strWhere">条件</param>
         /// <param name="intTop">前N条</param>
@@ -262,7 +315,7 @@ namespace Met.Core.Repository.SqlServer
 
         /// <summary>
         /// 功能描述:分页查询
-        /// 作　　者:Blog.Core
+        /// 作　　者:Met.Core
         /// </summary>
         /// <param name="whereExpression">条件表达式</param>
         /// <param name="intPageIndex">页码（下标0）</param>
@@ -281,7 +334,7 @@ namespace Met.Core.Repository.SqlServer
 
         /// <summary>
         /// 功能描述:分页查询
-        /// 作　　者:Blog.Core
+        /// 作　　者:Met.Core
         /// </summary>
         /// <param name="strWhere">条件</param>
         /// <param name="intPageIndex">页码（下标0）</param>
@@ -299,19 +352,42 @@ namespace Met.Core.Repository.SqlServer
             return await Task.Run(() => db.Queryable<TEntity>().OrderByIF(!string.IsNullOrEmpty(strOrderByFileds), strOrderByFileds).WhereIF(!string.IsNullOrEmpty(strWhere), strWhere).ToPageList(intPageIndex, intPageSize));
         }
 
-
-
-
-        public async Task<List<TEntity>> QueryPage(Expression<Func<TEntity, bool>> whereExpression,
-        int intPageIndex = 0, int intPageSize = 20, string strOrderByFileds = null)
+        /// <summary>
+        /// 根据条件查询分页数据
+        /// </summary>
+        /// <param name="whereExpression"></param>
+        /// <param name="orderBy"></param>
+        /// <param name="pageIndex">当前页面索引</param>
+        /// <param name="pageSize">分布大小</param>
+        /// <returns></returns>
+        public async Task<PageData<TEntity>> QueryPage(Expression<Func<TEntity, bool>> whereExpression, int pageIndex = 1, int pageSize = 20, string orderBy = "")
         {
-            return await Task.Run(() => db.Queryable<TEntity>()
-            .OrderByIF(!string.IsNullOrEmpty(strOrderByFileds), strOrderByFileds)
+            var totalCount = 0;
+            var page = await Task.Run(() => db.Queryable<TEntity>()
             .WhereIF(whereExpression != null, whereExpression)
-            .ToPageList(intPageIndex, intPageSize));
+            .OrderByIF(!string.IsNullOrEmpty(orderBy), orderBy)
+            .ToPageList(pageIndex, pageSize, ref totalCount));
+            var list = new PageData<TEntity>(page, pageIndex, pageSize, totalCount);
+            return list;
         }
-
-
+        /// <summary>
+        /// 根据条件查询分页数据
+        /// </summary>
+        /// <param name="strWhere"></param>
+        /// <param name="orderBy"></param>
+        /// <param name="pageIndex">当前页面索引</param>
+        /// <param name="pageSize">分布大小</param>
+        /// <returns></returns>
+        public async Task<PageData<TEntity>> QueryPage(string strWhere = "", int pageIndex = 1, int pageSize = 20, string orderBy = "")
+        {
+            var totalCount = 0;
+            var page = await Task.Run(() => db.Queryable<TEntity>().
+            WhereIF(!string.IsNullOrEmpty(strWhere), strWhere)
+            .OrderByIF(!string.IsNullOrEmpty(orderBy), orderBy)
+            .ToPageList(pageIndex, pageSize, ref totalCount));
+            var list = new PageData<TEntity>(page, pageIndex, pageSize, totalCount);
+            return list;
+        }
 
 
     }

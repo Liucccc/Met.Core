@@ -18,7 +18,7 @@
 
 <# 
 	var solutionsPath = Host.ResolveAssemblyReference("$(SolutionDir)");
-	var OutputPath = solutionsPath + "\\src\\2.Application\\Met.Core.IServices";
+	var OutputPath = solutionsPath + "\\src\\2.Application\\Met.Core.IServices\\Base";
 	if (!Directory.Exists(OutputPath))
 	{
 	    Directory.CreateDirectory(OutputPath);
@@ -47,7 +47,7 @@ namespace Met.Core.IServices
 	/// <summary>
 	/// I<#=tableName#>Services
 	/// </summary>	
-	public interface I<#=tableName#>Services :IBaseServices<<#=tableName#>>
+	public partial interface I<#=tableName#>Services :IBaseServices<<#=tableName#>>
     {
 
        
@@ -85,7 +85,7 @@ namespace Met.Core.IServices
 	/// <summary>
 	/// <#=row["TABLE_NAME"].ToString()#>Services
 	/// </summary>	
-    public interface I<#=row["TABLE_NAME"].ToString()#>Services :IBaseServices<<#=row["TABLE_NAME"].ToString()#>>
+    public partial interface I<#=row["TABLE_NAME"].ToString()#>Services :IBaseServices<<#=row["TABLE_NAME"].ToString()#>>
 	{
 
        

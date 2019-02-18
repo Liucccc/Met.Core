@@ -18,7 +18,7 @@
 
 <# 
 	var solutionsPath = Host.ResolveAssemblyReference("$(SolutionDir)");
-	var OutputPath = solutionsPath + "\\src\\2.Application\\Met.Core.Services";
+	var OutputPath = solutionsPath + "\\src\\2.Application\\Met.Core.Services\\Base";
 	if (!Directory.Exists(OutputPath))
 	{
 	    Directory.CreateDirectory(OutputPath);
@@ -48,7 +48,7 @@ namespace Met.Core.Services
 	/// <summary>
 	/// <#=tableName#>Services
 	/// </summary>	
-	public class <#=tableName#>Services : BaseServices<<#=tableName#>>, I<#=tableName#>Services
+	public partial class <#=tableName#>Services : BaseServices<<#=tableName#>>, I<#=tableName#>Services
     {
 	
         I<#=tableName#>Repository dal;
@@ -93,7 +93,7 @@ namespace Met.Core.Services
 	/// <summary>
 	/// <#=row["TABLE_NAME"].ToString()#>Services
 	/// </summary>	
-	public class <#=row["TABLE_NAME"].ToString()#>Services : BaseServices<<#=row["TABLE_NAME"].ToString()#>>, I<#=row["TABLE_NAME"].ToString() #>Services
+	public partial class <#=row["TABLE_NAME"].ToString()#>Services : BaseServices<<#=row["TABLE_NAME"].ToString()#>>, I<#=row["TABLE_NAME"].ToString() #>Services
     {
 	
         I<#=row["TABLE_NAME"].ToString() #>Repository dal;

@@ -18,7 +18,7 @@
 
 <# 
 	var solutionsPath = Host.ResolveAssemblyReference("$(SolutionDir)");
-	var OutputPath = solutionsPath + "\\src\\3.Repository\\Met.Core.Repository.SqlServer";
+	var OutputPath = solutionsPath + "\\src\\3.Repository\\Met.Core.Repository.SqlServer\\Base";
 	if (!Directory.Exists(OutputPath))
 	{
 	    Directory.CreateDirectory(OutputPath);
@@ -47,7 +47,7 @@ namespace Met.Core.Repository.SqlServer
 	/// <summary>
 	/// <#=tableName#>Repository
 	/// </summary>	
-	public class <#=tableName#>Repository : BaseRepository<<#=tableName#>>, I<#=tableName#>Repository
+	public partial class <#=tableName#>Repository : BaseRepository<<#=tableName#>>, I<#=tableName#>Repository
     {
 
        
@@ -86,7 +86,7 @@ namespace Met.Core.FrameWork.Repository
 	/// <summary>
 	/// <#=row["TABLE_NAME"].ToString()#>Repository
 	/// </summary>	
-	public class <#=row["TABLE_NAME"].ToString()#>Repository : BaseRepository<<#=row["TABLE_NAME"].ToString()#>>, I<#=row["TABLE_NAME"].ToString() #>Repository
+	public partial class <#=row["TABLE_NAME"].ToString()#>Repository : BaseRepository<<#=row["TABLE_NAME"].ToString()#>>, I<#=row["TABLE_NAME"].ToString() #>Repository
     {
 
        

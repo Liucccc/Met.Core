@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\4.Entity\Met.Core.Models\Met.Core.Models.csproj" />
+    <ProjectReference Include="..\..\4.Entity\Met.Core.ViewModel\Met.Core.ViewModel.csproj" />
   </ItemGroup>
 
 </Project>

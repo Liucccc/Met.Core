@@ -1,0 +1,89 @@
+﻿
+@{
+    ViewData["Title"] = "Add";
+    Layout = "~/Views/Shared/_Form.cshtml";
+}
+
+<script>
+    var id = request("id");
+
+    $(function () {
+        initControl();
+    })
+
+    function initControl() {
+        //获取表单
+        if (!!id) {
+            $.fn.setForm({
+                url: "/Users/GetFromJson",
+                param: { id: id },
+                success: function (data) {
+                    $("#form1").SetWebControls(data);
+                }
+            });
+        }
+    }
+
+    //保存表单
+    function AcceptClick() {
+        var postData = $("#form1").GetWebControls();
+        postData["id"] = id;
+        if (!$("#form1").Validform()) {
+            return false;
+        }
+        $.fn.submitForm({
+            url: "/Users/Add",
+            param: postData,
+            loading: "正在保存数据...",
+            success: function () {
+                $.currentIframe().$('#UsersTable').bootstrapTable('refresh');
+            }
+        });
+    }
+
+</script>
+<div id="form1">
+    <div class="tab-content" style="padding-top: 15px;">
+        <div id="BaseInfo" class="tab-pane active" style="padding-right:30px;">
+            <table class="form">
+                <tr>
+                    <td class="formTitle">登录名称<font face="宋体">*</font></td>
+                    <td class="formValue">
+                        <input id="UserName" type="text" class="form-control" placeholder="登录名称" isvalid="yes" checkexpession="NotNull" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formTitle">真实姓名<font face="宋体">*</font></td>
+                    <td class="formValue">
+                        <input id="TrueName" type="text" class="form-control" placeholder="真实姓名" isvalid="yes" checkexpession="NotNull" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formTitle">电子邮件<font face="宋体">*</font></td>
+                    <td class="formValue">
+                        <input id="Email" type="text" class="form-control" placeholder="电子邮件" isvalid="yes" checkexpession="Email" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formTitle">电话</td>
+                    <td class="formValue">
+                        <input id="Phone" type="text" class="form-control" placeholder="电话" isvalid="yes" checkexpession="PhoneOrNull" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formTitle">地址</td>
+                    <td class="formValue">
+                        <input id="Address" type="text" class="form-control" placeholder="地址" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formTitle">是否激活</td>
+                    <td class="formValue">
+                        <input id="Enabled" type="checkbox" class="checkbox" checked="checked" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+

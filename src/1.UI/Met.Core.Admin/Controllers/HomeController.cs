@@ -8,10 +8,12 @@ using Met.Core.Admin.Models;
 
 namespace Met.Core.Admin.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         public IActionResult Index()
         {
+            ViewBag.currentUserID = CurrentUser.Id;
+            ViewBag.currentUserName = CurrentUser.TrueName;
             return View();
         }
 
@@ -24,6 +26,11 @@ namespace Met.Core.Admin.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public IActionResult WelCome()
+        {
+            return View();
         }
     }
 }

@@ -1,0 +1,166 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Index.cshtml";
+}
+
+<div class="panel-body" style="padding-bottom:0px;">
+    <div class="panel panel-default gridPanel">
+        <div class="panel-heading">查询条件</div>
+        <div class="panel-body">
+            <form id="formSearch" class="form-horizontal">
+                <div class="form-group" style="margin-top:15px">
+                    <label class="control-label col-sm-1" for="txt_search_name">用户组名称</label>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control" id="txt_search_name">
+                    </div>
+                    <label class="control-label col-sm-1" for="txt_search_statu">是否激活</label>
+                    <div class="col-sm-2">
+                        @Html.ComboBox("ddl_enable", "[{\"k\":\"1\",\"v\":\"是\"},{\"k\":\"0\",\"v\":\"否\"}]", "k", "v", "全部", false, false)
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="toolbar" class="btn-group">
+        <button id="btn_add" type="button" class="btn btn-default">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 新增
+        </button>
+        <button id="btn_edit" type="button" class="btn btn-default">
+            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> 修改
+        </button>
+        <button id="btn_delete" type="button" class="btn btn-default">
+            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> 删除
+        </button>
+        <button id="btn_role" type="button" class="btn btn-default ">
+            <span class="fa fa-anchor" aria-hidden="true"></span> 设置角色
+        </button>
+        <button id="btn_query" type="button" class="btn btn-default">
+            <span class="glyphicon glyphicon-search" aria-hidden="true"></span> 查询
+        </button>
+    </div>
+    <table id="UserGroupsTable" class="table-condensed"></table>
+</div>
+<script>
+    var actionUrl = "/UserGroups/GetTableJson";
+    var $table = $("#UserGroupsTable");
+    $(function () {
+        //1.初始化Table
+        TableInit();
+        ButtonInit();
+    });
+    var TableInit = function () {
+        //初始化Table
+        var dbQueryParams = function (params) {
+            var temp = {   //这里的键的名字和控制器的变量名必须一致，这边改动，控制器也需要改成一样的
+                rows: params.limit,                         //页面大小
+                page: (params.offset / params.limit) + 1,   //页码
+                sort: params.sort == undefined ? "OrderSort" : params.sort,      //排序列名
+                order: params.order == "" ? "asc" : params.order,    //排位命令（desc，asc）
+                groupName: $("#txt_search_name").val(),
+                enable: $("#ddl_enable").attr("data-value")
+            };
+            return temp;
+        };
+        var tbColumns = [
+            {
+                field: 'Id',
+                title: 'Id号',
+                visible: false
+            }, {
+                field: 'GroupName',
+                title: '用户组名称'
+            }, {
+                field: 'Description',
+                title: '描述'
+            }, {
+                field: 'UpdateDate',
+                title: '更新时间',
+                sortable: 'true',
+                formatter: function (value, row, index) {
+                    return formatDate(value, 'yyyy-MM-dd hh:mm:ss')
+                }
+            }, {
+                field: 'Enabled',
+                title: '是否激活',
+                align: 'center',
+                sortable: 'true',
+                formatter: function (value, row, index) {
+                    if (value) {
+                        return "是";
+                    } else {
+                        return "否";
+                    }
+                }
+            }
+        ];
+        //初始化表格
+        $.fn.InitTable($table, actionUrl, dbQueryParams, tbColumns, true);
+    };
+
+    var ButtonInit = function () {
+        $("#btn_query").click(function () {
+            $table.bootstrapTable('refresh', { url: actionUrl });
+        });
+
+        $("#btn_add").click(function () {
+            $.fn.modalOpen({
+                id: "UserGroupsAdd",
+                title: '新增用户组',
+                url: '/UserGroups/Add',
+                width: "950px",
+                height: "750px",
+                callBack: function (iframeId) {
+                    top.frames[iframeId].AcceptClick();
+                }
+            });
+        })
+
+        $("#btn_edit").click(function () {
+            var id = $table.tableRowValue('Id');
+            if (checkedRow(id)) {
+                $.fn.modalOpen({
+                    id: "UserGroupsAdd",
+                    title: '修改用户组',
+                    url: '/UserGroups/Add?id=' + id,
+                    width: "950px",
+                    height: "750px",
+                    callBack: function (iframeId) {
+                        top.frames[iframeId].AcceptClick();
+                    }
+                });
+            }
+        })
+
+        $("#btn_delete").click(function () {
+            var ids = $table.tableRowValue('Id');
+            if (checkedArray(ids)) {
+                $.fn.deleteForm({
+                    url: "/UserGroups/Del",
+                    param: { ids: ids },
+                    success: function (data) {
+                        $table.bootstrapTable('refresh');
+                    }
+                })
+            }
+        })
+
+        $("#btn_role").click(function () {
+            var id = $table.tableRowValue('Id');
+            if (checkedRow(id)) {
+                $.fn.modalOpen({
+                    id: "GroupSetRole",
+                    title: '设置角色',
+                    url: '/Users/SetRole?id=' + id,
+                    width: "950px",
+                    height: "750px",
+                    callBack: function (iframeId) {
+                        top.frames[iframeId].AcceptClick();
+                    }
+                });
+            }
+        })
+    };
+
+</script>

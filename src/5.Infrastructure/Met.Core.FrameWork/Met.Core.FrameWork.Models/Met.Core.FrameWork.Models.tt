@@ -50,14 +50,14 @@ namespace Met.Core.Models
 	/// <summary>
 	/// <#=tableName#>
 	/// </summary>	
-	public class <#=tableName#>//可以在这里加上基类等
+	public partial class <#=tableName#>//可以在这里加上基类等
 	{
 	//将全部字段遍历出来
 <# foreach(DbColumn column in DbHelper.GetDbColumns(config.ConnectionString, config.DbDatabase, config.TableName)){#>
-	  /// <summary>
-	  /// <#=column.Remark#>
-	  /// </summary>	
-	  public <#= column.CSharpType#><# if(column.CommonType.IsValueType && column.IsNullable){#>?<#}#> <#=column.ColumnName#> { get; set; }
+	    /// <summary>
+	    /// <#=column.Remark#>
+	    /// </summary>	
+	    public <#= column.CSharpType#><# if(column.CommonType.IsValueType && column.IsNullable){#>?<#}#> <#=column.ColumnName#> { get; set; }
 <#}#> 
     }
 }
@@ -96,10 +96,10 @@ namespace Met.Core.Models
 	public partial class <#=row["TABLE_NAME"].ToString()#>
 	{
 <# foreach(DbColumn column in DbHelper.GetDbColumns(config.ConnectionString, config.DbDatabase, row["TABLE_NAME"].ToString() )){ #>
-	  /// <summary>
-	  /// <#=column.Remark#>
-	  /// </summary>	
-	  public <#= column.CSharpType#><# if(column.CommonType.IsValueType && column.IsNullable){#>?<#}#> <#=column.ColumnName #> { get; set; }
+	    /// <summary>
+	    /// <#=column.Remark#>
+	    /// </summary>	
+	    public <#= column.CSharpType#><# if(column.CommonType.IsValueType && column.IsNullable){#>?<#}#> <#=column.ColumnName #> { get; set; }
 <#}#> 
 
     }

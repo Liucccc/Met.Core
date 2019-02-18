@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewData["Title"] = "SetGroup";
+    Layout = "~/Views/Shared/_Index.cshtml";
+}
+
+@{
+    foreach (var item in ViewBag.allGroups)
+    {
+        bool check = (ViewBag.userGroupsIds != null && ViewBag.userGroupsIds.Contains(item.Id));
+        <label><input type="checkbox" name="group" id="group_@item.Id" value="@item.Id" @if (check) { <text> checked</text> } />&nbsp;@item.GroupName&nbsp;</label>
+    }
+}
+
+<script>
+    var id = request("id");
+
+    function AcceptClick() {
+        var postData = {};
+        var checkIds = "";
+        $('input:checkbox[name=group]:checked').each(function (k) {
+            if (k == 0) {
+                checkIds = $(this).val();
+            } else {
+                checkIds += ',' + $(this).val();
+            }
+        })
+        postData["id"] = id;
+        postData["checkIds"] = checkIds;
+        $.fn.submitForm({
+            url: "/Users/SetGroup",
+            param: postData,
+            loading: "正在保存数据...",
+            success: function () {
+                $.currentIframe().$('#UsersTable').bootstrapTable('refresh');
+            }
+        });
+    }
+</script>

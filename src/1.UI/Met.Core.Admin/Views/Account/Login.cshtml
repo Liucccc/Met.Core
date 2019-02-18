@@ -1,0 +1,71 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <title>XXX-后台管理系统</title>
+    <meta name="keywords" content="XXX-后台管理系统" />
+    <meta name="description" content="XXX-后台管理系统" />
+    <script type="text/javascript">
+        //判断一下当前是不是做顶层，如果不是，则做一下顶层页面重定向
+        if (window != top) {
+            top.location.href = location.href;
+        }
+    </script>
+    <link href="/Content/ui/css/layout.css" rel="stylesheet" />
+    <link href="/Content/ui/css/login.css" rel="stylesheet" />
+
+</head>
+
+<body class="login-bg">
+    <div class="main ">
+        <!--登录-->
+        <div class="login-dom login-max">
+            <div class="logo text-center">
+                <a href="#">
+                    <img src="/content/ui/img/logo.png" style="width:193px;height:96px;" />
+                </a>
+            </div>
+            <div class="login container " id="login">
+                <p class="text-big text-center logo-color">
+                    XXX
+                </p>
+
+                <p class="text-center margin-small-top logo-color text-small">
+                    后台管理系统
+                </p>
+                <div class="login-form">
+                    <div class="login-box border text-small" id="box">
+                        <div class="name border-bottom">
+                            <input type="text" placeholder="用户名" id="username" name="username" value="admin" />
+                        </div>
+                        <div class="pwd">
+                            <input type="password" placeholder="密码" id="password" name="password" value="123456" />
+                        </div>
+                        <div id="msg" style="color:red;display:none;font-size:12px;">
+                        </div>
+                    </div>
+                    <input type="submit" id="login-btn" class="btn text-center login-btn" value="立即登录" />
+                </div>
+                <div class="forget">
+                    <a href="#" class="forget-pwd text-small fl"> 忘记登录密码？</a><a href="#" class="forget-new text-small fr" id="forget-new">注册账号</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer text-center text-small ie">
+            Copyright 2013-2016 版权所有 ©tzhsweet 2015-2018      <a href="#" target="_blank">粤ICP备16024545号-1</a>
+        </div>
+    </div>
+</body>
+</html>
+
+<script src="/Content/ui/global/jQuery/jquery.min.js"></script>
+<script src="~/Content/supermgr/Base/js/matrix.login.js"></script>
+<script type="text/javascript">
+    $("body").keydown(function (e) { if (e.keyCode == 13) { $("#login-btn").click(); } });
+</script>
+

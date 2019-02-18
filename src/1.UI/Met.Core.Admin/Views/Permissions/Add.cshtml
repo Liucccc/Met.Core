@@ -1,0 +1,77 @@
+﻿
+@{
+    ViewData["Title"] = "Add";
+    Layout = "~/Views/Shared/_Form.cshtml";
+}
+
+<script>
+    var id = request("id");
+
+    $(function () {
+        initControl();
+    })
+
+    function initControl() {
+        //获取表单
+        if (!!id) {
+            $.fn.setForm({
+                url: "/Permissions/GetFromJson",
+                param: { id: id },
+                success: function (data) {
+                    $("#form1").SetWebControls(data);
+                }
+            });
+        }
+    }
+
+    //保存表单
+    function AcceptClick() {
+        var postData = $("#form1").GetWebControls();
+        postData["id"] = id;
+        if (!$("#form1").Validform()) {
+            return false;
+        }
+        $.fn.submitForm({
+            url: "/Permissions/Add",
+            param: postData,
+            loading: "正在保存数据...",
+            success: function () {
+                $.currentIframe().$('#PermissionsTable').bootstrapTable('refresh');
+            }
+        });
+    }
+
+</script>
+<div id="form1">
+    <div class="tab-content" style="padding-top: 15px;">
+        <div id="BaseInfo" class="tab-pane active" style="padding-right:30px;">
+            <table class="form">
+                <tr>
+                    <td class="formTitle">角色名称<font face="宋体">*</font></td>
+                    <td class="formValue">
+                        <input id="PermissionsName" type="text" class="form-control" placeholder="角色名称" isvalid="yes" checkexpession="NotNull" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formTitle">描述</td>
+                    <td class="formValue">
+                        <input id="Description" type="text" class="form-control" placeholder="描述" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formTitle">排序号<font face="宋体">*</font></td>
+                    <td class="formValue">
+                        <input id="OrderSort" type="text" class="form-control" placeholder="排序号" isvalid="yes" checkexpession="Num" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formTitle">是否激活</td>
+                    <td class="formValue">
+                        <input id="Enabled" type="checkbox" class="checkbox" checked="checked" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
