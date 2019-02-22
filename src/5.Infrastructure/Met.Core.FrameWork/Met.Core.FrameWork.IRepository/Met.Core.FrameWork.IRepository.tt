@@ -32,11 +32,6 @@
 <# 
 if(tableName!=""){
     #>  
-//--------------------------------------------------------------------
-//     此代码由T4模板自动生成
-//	   生成时间 <#=DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")#> 
-//     对此文件的更改可能会导致不正确的行为，并且如果重新生成代码，这些更改将会丢失。
-//--------------------------------------------------------------------
 
 using System;
 using Met.Core.Models;
@@ -46,7 +41,7 @@ namespace Met.Core.IRepository
 	/// <summary>
 	/// I<#=tableName#>Repository
 	/// </summary>	
-	public partial interface I<#=tableName#>Repository : IBaseRepository<<#=tableName#>>
+	public interface I<#=tableName#>Repository : IBaseRepository<<#=tableName#>>
     {
 
        
@@ -69,11 +64,6 @@ namespace Met.Core.IRepository
     {  
 		manager.StartBlock("I"+row["TABLE_NAME"].ToString()+"Repository"+".cs");//文件名
 	 #>
-//--------------------------------------------------------------------
-//     此代码由T4模板自动生成
-//	   生成时间 <#=DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")#> 
-//     对此文件的更改可能会导致不正确的行为，并且如果重新生成代码，这些更改将会丢失。
-//--------------------------------------------------------------------
 	
 using System;
 using Met.Core.Models;
@@ -82,7 +72,7 @@ namespace Met.Core.IRepository
 	/// <summary>
 	/// I<#=row["TABLE_NAME"].ToString()#>Repository
 	/// </summary>	
-	public partial interface I<#=row["TABLE_NAME"].ToString()#>Repository : IBaseRepository<<#=row["TABLE_NAME"].ToString()#>>
+	public interface I<#=row["TABLE_NAME"].ToString()#>Repository : IBaseRepository<<#=row["TABLE_NAME"].ToString()#>>
     {
 
        

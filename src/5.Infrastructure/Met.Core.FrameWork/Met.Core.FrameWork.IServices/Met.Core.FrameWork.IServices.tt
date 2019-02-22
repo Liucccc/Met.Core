@@ -33,12 +33,6 @@
 if(tableName!=""){
     #>  
 
-//--------------------------------------------------------------------
-//     此代码由T4模板自动生成
-//	   生成时间 <#=DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")#> 
-//     对此文件的更改可能会导致不正确的行为，并且如果重新生成代码，这些更改将会丢失。
-//--------------------------------------------------------------------
-
 using System;
 using Met.Core.Models;
 
@@ -47,7 +41,7 @@ namespace Met.Core.IServices
 	/// <summary>
 	/// I<#=tableName#>Services
 	/// </summary>	
-	public partial interface I<#=tableName#>Services :IBaseServices<<#=tableName#>>
+	public interface I<#=tableName#>Services :IBaseServices<<#=tableName#>>
     {
 
        
@@ -71,11 +65,6 @@ namespace Met.Core.IServices
 		manager.StartBlock("I"+row["TABLE_NAME"].ToString()+"Services"+".cs");
 	 #>
 
-//--------------------------------------------------------------------
-//     此代码由T4模板自动生成
-//	   生成时间 <#=DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")#> 
-//     对此文件的更改可能会导致不正确的行为，并且如果重新生成代码，这些更改将会丢失。
-//--------------------------------------------------------------------    
 
 using System;
 using Met.Core.Models;
@@ -85,7 +74,7 @@ namespace Met.Core.IServices
 	/// <summary>
 	/// <#=row["TABLE_NAME"].ToString()#>Services
 	/// </summary>	
-    public partial interface I<#=row["TABLE_NAME"].ToString()#>Services :IBaseServices<<#=row["TABLE_NAME"].ToString()#>>
+    public interface I<#=row["TABLE_NAME"].ToString()#>Services :IBaseServices<<#=row["TABLE_NAME"].ToString()#>>
 	{
 
        

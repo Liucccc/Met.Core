@@ -84,5 +84,13 @@ namespace Met.Core.Admin.Controllers
             return Error("删除失败！");
         }
         #endregion
+
+        #region 获得菜单按钮
+        public async Task<IActionResult> GetUserPermissionButtonsByModuleId(int moduleId)
+        {
+            var data = await _permissionsServices.Query(m => m.ModuleId == moduleId && m.Enabled);
+            return Json(data);
+        }
+        #endregion
     }
 }

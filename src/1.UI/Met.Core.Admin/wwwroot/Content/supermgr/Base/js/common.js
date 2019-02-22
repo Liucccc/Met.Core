@@ -22,7 +22,7 @@ jQuery(document).ready(function () {
         }
     }, function () {
         $(this).removeClass("hover");
-    });
+        });
 });
 
 //获取layout内容页高度
@@ -680,14 +680,15 @@ $.fn.LeftListShowOfemail = function (options) {
 };
 $.fn.authorizeButton = function () {
     var $element = $(this);
-    $element.find("a.btn").attr("authorize", "no");
+    $element.find("button.btn").attr("authorize", "no");
     $element.find("ul.dropdown-menu").find("li").attr("authorize", "no");
     var moduleId = tabiframeId().substring(11);
 
-    $.getJSON("/SysMgr/PermissionUserMgr/GetUserPermissionButtonsByModuleId", { moduleId: moduleId }, function (data) {
+    $.getJSON("/Permissions/GetUserPermissionButtonsByModuleId", { moduleId: moduleId }, function (data) {
         if (data) {
             $.each(data, function (i) {
-                $element.find("." + data[i].EnCode).attr("authorize", "yes");
+                $element.find("#" + data[i].Code).attr("authorize", "yes");
+                $element.find("#" + data[i].Code).css("display", "block");
             });
         }
         $element.find("[authorize=no]").remove();
@@ -1394,6 +1395,7 @@ $.fn.InitTable = function (tb, actionUrl, dbQueryParams, tbColumns, showCheckBox
         tbColumns.unshift({ checkbox: true });
     }
     var height = $.fn.getGridHeight(true);
+    console.log(height);
     $(tb).bootstrapTable({
         url: actionUrl,         //请求后台的URL（*）
         method: 'get',                      //请求方式（*）
